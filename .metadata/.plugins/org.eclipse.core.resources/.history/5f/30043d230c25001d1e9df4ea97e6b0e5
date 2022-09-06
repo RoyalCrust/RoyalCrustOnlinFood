@@ -1,0 +1,145 @@
+package com.royalcrust.controller;
+
+import java.util.List;
+
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.Model.Feedback;
+import com.example.demo.Model.Food;
+import com.example.demo.Model.Order;
+import com.example.demo.Model.RaiseComplaint;
+import com.example.demo.service.AdminService;
+
+@RestController
+@RequestMapping("/admin")
+public class AdminController {
+
+	@Autowired
+	private AdminService adServe;
+
+	/*
+	 *  Controller for the requests related to the Food store
+	 */
+
+	//requests the controller to add Food in Food store
+
+	//http://localhost:8080/RoyalCurst/admin/addFood
+
+	@SuppressWarnings("unchecked")
+	@PostMapping("/addFood")
+	public ResponseEntity<Food> addFood( @RequestBody Food food)
+	{
+	adServe.addFood(food);
+		return new ResponseEntity("Food added",HttpStatus.OK);
+
+
+	}
+
+	//requests the controller to delete by Food id in Food store
+
+	//http://localhost:8080/admin/deleteById/
+
+	@DeleteMapping("/deleteById/{id}")
+	public ResponseEntity<Food> deleteFdById(@PathVariable("id") Integer id)
+	{
+		adServe.deleteFood(id);
+		return new ResponseEntity("Food Deleted",HttpStatus.OK);
+
+	}
+
+	//requests the controller to update Food in Food store
+
+	//http://localhost:8091/RoyalCurst/admin/update/
+
+	@PutMapping("/update")
+	public ResponseEntity<Food> updateFood(@RequestBody Food Food )
+	{
+		Food updateFood = adServe.updateFood(Food);
+
+		return new ResponseEntity("Food updated successfully",HttpStatus.OK);
+
+	}
+
+	//requests the controller to get all Food from Food store
+
+	
+
+	@GetMapping("/allFood")
+	public ResponseEntity<List<Food>> getAllFood()
+	{
+		List<Food> foodList = adServe.getAllFood();
+		if (foodList.isEmpty()) {
+			return new ResponseEntity("Sorry no Food list found!", HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<List<Food>>(foodList,HttpStatus.OK);
+
+	}
+
+	/*
+	 *  Controller for the requests related to the Raise Complaint
+	 */
+
+	//requests the controller to view all complaint raised by user
+
+	
+
+	@GetMapping("/viewallraise")
+	public ResponseEntity<List<RaiseComplaint>> viewCompliant()
+	{
+		List<RaiseComplaint> raisecomp = adServe.viewComplaints();
+		return new ResponseEntity<>(raisecomp, HttpStatus.OK);
+
+	}
+
+	/*
+	 *  Controller for the requests related to the feedback
+	 */
+	//requests the controller to view all feedback given by user
+
+	
+
+	@GetMapping("/viewfeedback")
+	public ResponseEntity<List<Feedback>> viewFeedback()
+	{
+		List<Feedback> viewfeedback = adServe.viewFeedbacks();
+		return new ResponseEntity(viewfeedback, HttpStatus.OK);
+
+	}
+
+	/*
+	 *  Controller for the requests related to the Order
+	 */
+	//requests the controller to view all order by user
+
+	
+	@GetMapping("/vieworder")
+	public ResponseEntity<List<Order>> viewOrders()
+	{
+		List<Order> viewOrder = adServe.viewOrders();
+		return new ResponseEntity(viewOrder,HttpStatus.OK);
+
+	}
+
+
+}
+
+
+
+
+
+
+

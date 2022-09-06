@@ -1,0 +1,96 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.Model.Cart;
+import com.example.demo.Model.Feedback;
+import com.example.demo.Model.Food;
+import com.example.demo.Model.RaiseComplaint;
+import com.royalcrust.dao.CartRepository;
+import com.royalcrust.dao.FeedbackRepository;
+import com.royalcrust.dao.FoodRepository;
+import com.royalcrust.dao.RaiseComplaintRepository;
+
+
+
+@Service
+public class UserServiceImpl implements UserService {
+
+	// connecting the service implementation with the Feedback repository
+
+	@Autowired
+	private FeedbackRepository feedbackRepo;
+
+	// connecting the service implementation with the Vegetable repository
+
+	@Autowired
+	private FoodRepository FdRepo;
+
+	// connecting the service implementation with the Cart repository
+
+	@Autowired
+	private CartRepository cartRepo;
+
+	// connecting the service implementation with the Raise Compliant repository
+
+	@Autowired
+	private RaiseComplaintRepository raiseRepo;
+
+	// method implementing to give feedback
+
+	@Override
+	public Feedback giveFeedBack(Feedback feedback) {
+
+		Feedback userFeedback = feedbackRepo.saveAndFlush(feedback);
+		return userFeedback;
+	}
+
+	// method implementing to view all Food
+
+	@Override
+	public List<Food> viewAllFood() {
+		List<Food> res=FdRepo.findAll();
+		return res;
+	}
+
+	// method implementing to add Food to Cart
+
+	@Override
+	public Cart addFoodToCart(Cart cart) {
+		Cart addtocart=cartRepo.saveAndFlush(cart);
+		return addtocart;
+	}
+
+	// method implementing to view Cart
+
+	@Override
+	public List<Cart> viewCart() {
+
+		List<Cart> viewCart = cartRepo.findAll();
+		return viewCart;
+	}
+
+	// method implementing to raise Complaint
+
+	@Override
+	public RaiseComplaint raiseCompliant(RaiseComplaint raisecomp) {
+		RaiseComplaint raise = raiseRepo.saveAndFlush(raisecomp);
+		return raise;
+	}
+
+	// method implementing to delete Food by Id
+
+	public Cart deleteFoodbyId(int Fd_id) {
+		cartRepo.deleteById(Fd_id);
+		return null;
+	}
+
+	@Override
+	public void deleteFoodbyId(Integer fd_id) {
+		// TODO Auto-generated method stub
+
+	}
+}

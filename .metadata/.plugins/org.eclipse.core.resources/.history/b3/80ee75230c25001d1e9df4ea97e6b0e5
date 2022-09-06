@@ -1,0 +1,123 @@
+package com.royalcrust.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.Model.Cart;
+import com.example.demo.Model.Feedback;
+import com.example.demo.Model.Food;
+import com.example.demo.Model.RaiseComplaint;
+import com.example.demo.service.UserService;
+
+@RestController
+@RequestMapping("/user")
+public class UserController {
+
+	@Autowired
+	private UserService userServe;
+
+	/*
+	 *  Controller for the requests related to the Feedback
+	 */
+
+	//requests the controller to give Feedback
+
+
+	
+
+	@PostMapping("/feedback")
+	public ResponseEntity<Feedback> giveFeedback(@RequestBody Feedback feedback)
+	{
+	userServe.giveFeedBack(feedback);
+		return new ResponseEntity("Feedback Recorded",HttpStatus.OK);
+
+	}
+
+	/*
+	 *  Controller for the requests related to the Food store
+	 */
+	//requests the controller to view all Food
+
+	
+
+	@GetMapping("/allFood")
+	public ResponseEntity<List<Food>> viewAllFood()
+	{
+		List<Food> viewFd = userServe.viewAllFood();
+
+		return  new ResponseEntity<>(viewFd, HttpStatus.OK);
+
+	}
+
+	/*
+	 *  Controller for the requests related to the cart
+	 */
+
+	//requests the controller to add Food to Cart
+
+	
+
+	@PostMapping("/addFood")
+	public ResponseEntity<Cart> addToCart(@RequestBody Cart cart)
+	{
+		Cart carts= userServe.addFoodToCart(cart);
+		return new ResponseEntity(carts, HttpStatus.OK) ;
+
+	}
+
+	//requests the controller to view Cart
+
+	//http://localhost:8091//user/viewcart
+
+	@GetMapping("/viewcart")
+	public ResponseEntity<List<Cart>> viewCart()
+	{
+		List<Cart> viewAddCart = userServe.viewCart();
+		return new ResponseEntity<>(viewAddCart, HttpStatus.OK);
+
+	}
+
+	//requests the controller to delete Food by id in cart
+
+	
+
+	@DeleteMapping("/deletebyFoodid/{Food_id}")
+	public ResponseEntity<Cart> deleteById(@PathVariable("Food_id") Integer Food_id)
+	{
+		userServe.deleteFoodbyId(Food_id);
+		return new ResponseEntity("Successfully deleted from cart ", HttpStatus.OK);
+
+	}
+
+	/*
+	 *  Controller for the requests related to the raiseCompliant
+	 */
+
+	//requests the controller to raise Compliant
+
+
+	
+	@PostMapping("/raise")
+	public ResponseEntity<RaiseComplaint> raiseCompliant(@RequestBody RaiseComplaint raisecompliant)
+	{
+		userServe.raiseCompliant(raisecompliant);
+		return new ResponseEntity("Compliant is Raised successfully", HttpStatus.OK);
+
+	}
+
+
+
+
+
+}
+

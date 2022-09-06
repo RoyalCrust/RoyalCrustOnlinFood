@@ -1,0 +1,26 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.royalcrust.Model.Cart;
+import com.royalcrust.Model.Feedback;
+import com.royalcrust.Model.Food;
+import com.royalcrust.Model.RaiseComplaint;
+
+
+@Service
+public interface UserService {
+
+	public Feedback giveFeedBack(Feedback feedback);
+	public List<Cart> viewCart();
+	public RaiseComplaint raiseCompliant(RaiseComplaint raisecomp);
+	public List<Food> viewAllFood();
+	Cart addFoodToCart(Cart cart);
+	public void deleteFoodbyId(Integer fd_id);
+
+
+
+
+}

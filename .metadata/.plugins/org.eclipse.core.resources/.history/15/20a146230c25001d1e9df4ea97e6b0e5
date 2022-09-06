@@ -1,0 +1,129 @@
+package com.example.demo.service;
+
+
+	import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.Model.Feedback;
+import com.example.demo.Model.Food;
+import com.example.demo.Model.Order;
+import com.example.demo.Model.RaiseComplaint;
+import com.royalcrust.dao.FeedbackRepository;
+import com.royalcrust.dao.FoodRepository;
+import com.royalcrust.dao.OrderRepository;
+import com.royalcrust.dao.RaiseComplaintRepository;
+
+
+
+	@Service
+public class AdminServiceImpl implements AdminService{
+
+
+
+		// connecting the service implementation with the Food repository
+
+
+		@Autowired
+		private FoodRepository FdRepo;
+
+		// connecting the service implementation with the RaiseCompliant repository
+
+		@Autowired
+		private RaiseComplaintRepository raiseRepo;
+
+		// connecting the service implementation with the Feedback repository
+
+		@Autowired
+		private FeedbackRepository feedbackRepo;
+
+		// connecting the service implementation with the Order repository
+
+		@Autowired
+		private OrderRepository orderRepo;
+
+		// method implementing to add Food in Food Store
+
+		@Override
+		public Food addFood(Food food) {
+			Food Fd= FdRepo.saveAndFlush(food);
+			return Fd;
+		}
+		// method implementing to delete Food in Food Store
+
+		@Override
+		public Food deleteFood(int id) {
+
+			 FdRepo.deleteById(id);
+			return null;
+		}
+
+		// method implementing to update Food in Food Store
+
+		//@Override
+		//public Food updateFood(Food Food) {
+		//	Food UpdateFood = FdRepo.saveAndFlush(Food));
+		//	return UpdatedFood;
+	//	}
+
+		// method implementing to get all Food form Food Store
+
+		@Override
+		public List<Food> getAllFood() {
+
+			return FdRepo.findAll();
+		}
+
+		// method implementing to view all Complaint raised by user
+
+		@Override
+		public List<RaiseComplaint> viewComplaints() {
+
+			return raiseRepo.findAll();
+		}
+
+		// method implementing to view all FeedBack given by user
+
+		@Override
+		public List<Feedback> viewFeedbacks() {
+
+			return feedbackRepo.findAll();
+		}
+
+		// method implementing to view all Order details which are ordered by user
+
+		/*
+		 * @Override public List<Order> viewOrders() {
+		 *
+		 * return orderRepo.findAll(); }
+		 */
+
+
+		@Override
+		public Food updateFood(Food food) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public Food updatFood(Food Food) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public List<Order> viewOrders() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+
+
+
+
+
+
+
+
+
+
+}

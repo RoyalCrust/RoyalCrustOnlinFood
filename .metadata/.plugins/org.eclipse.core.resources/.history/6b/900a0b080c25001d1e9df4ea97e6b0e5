@@ -1,0 +1,152 @@
+package com.example.demo;
+
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import com.example.demo.Model.Cart;
+import com.example.demo.Model.Feedback;
+import com.example.demo.Model.Food;
+import com.example.demo.Model.Order;
+import com.example.demo.dao.CartRepository;
+import com.example.demo.dao.FeedbackRepository;
+import com.example.demo.dao.FoodRepository;
+import com.example.demo.dao.OrderRepository;
+import com.example.demo.dao.RaiseComplaintRepository;
+import com.example.demo.dao.RegistrationRepository;
+import com.example.demo.dao.UserRepository;
+import com.example.demo.service.AdminService;
+import com.example.demo.service.CustomerSupportService;
+import com.example.demo.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+
+@SpringBootTest
+class RoyalCrustApplicationTests {
+	
+    @Autowired
+    private CustomerSupportService custServe;
+    
+    @Autowired
+    private AdminService adminServe;
+    
+    @Autowired
+    private UserService userServe;
+    
+    @MockBean
+    private FoodRepository FoodRepo;
+    
+    private MockMvc mockMvc;
+    
+    
+    @MockBean
+    private FeedbackRepository feedbackRepo;
+    
+    @MockBean
+    private RaiseComplaintRepository complainRepo;
+    
+    @MockBean
+    private UserRepository userRepo;
+    
+    @MockBean
+    private CartRepository cartRepo;
+    
+    @MockBean
+    private OrderRepository orderRepo;
+    
+    @MockBean
+    private RegistrationRepository regRepo;
+    
+
+	@Test
+	void getFoodTest() {
+        when(FoodRepo.findAll()).thenReturn(Stream.of(new Food(10,"Fruit",10,1)).collect(Collectors.toList()));
+        assertEquals(1, adminServe.getAllFood().size());
+	
+	}
+	@Test
+    public void testViewFeedback() {
+        when(feedbackRepo.findAll())
+        .thenReturn(Stream.of(new Feedback(101,"Good")).collect(Collectors.toList()));
+        assertEquals(1, adminServe.viewFeedbacks().size());
+    }
+    @Test
+    public void testDeleteFood() {
+        int id = 112;
+        adminServe.deleteFood(112);
+        verify(FoodRepo, times(1)).deleteById(112);
+    }
+
+    
+    @Test
+    public void testAddFood(){
+       Food  Food = new Food(8,"vegetable rice",30,1);        
+        Mockito.when(FoodRepo.save(Food)).thenReturn(Food);
+        String urlTemplate;
+        MockHttpServletRequestBuilder mockRequest = (MockHttpServletRequestBuilder) ((Object) MockMvcRequestBuilders.post(urlTemplate="/addFood")
+                .content(asJsonString(Food))
+              .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON));    
+    }
+    public static String asJsonString(final Object obj) {
+      try {
+          return new ObjectMapper().writeValueAsString(obj);
+      } catch (Exception e) {
+          throw new RuntimeException(e);
+      }
+  }
+
+    @Test
+    public void testViewOrder() {
+        
+        Cart cart = new Cart();
+        
+        when(orderRepo.findAll()).thenReturn(Stream.of(new Order(1211, "Pending", "Success", cart)).collect(Collectors.toList()));
+        assertEquals(1, adminServe.viewOrders().size());
+    }
+    
+    
+    /*
+     * Test Cases for User
+     */
+
+
+
+   @Test
+    public void testViewAllFood() {
+        when(FoodRepo.findAll()).thenReturn(Stream.of(new Food(111, "Chiken biryani", 15, 1)).collect(Collectors.toList()));
+        assertEquals(1, userServe.viewAllFood().size());
+    }
+
+
+
+   @Test
+    public void testViewCart() {
+        Food Food = new Food(112, "pizza", 10, 2);
+        when(cartRepo.findAll()).thenReturn(Stream.of(new Cart(11, 10, "R234", Food)).collect(Collectors.toList()));
+        assertEquals(1, userServe.viewCart().size());
+    }
+
+    
+    
+
+	private void assertEquals(int i, int size) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

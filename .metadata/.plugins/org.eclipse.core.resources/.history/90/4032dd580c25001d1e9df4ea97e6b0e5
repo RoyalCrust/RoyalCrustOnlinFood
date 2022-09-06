@@ -1,0 +1,24 @@
+package com.example.demo.service;
+
+
+
+	import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.example.demo.Model.Feedback;
+
+
+	@Service
+	public interface FeedBackService {
+		//method for managing feedbacks given by the Instructor
+				public List<Feedback> getAllFeedbacks();
+				public List<Feedback> deleteFeedback(Integer feedbackId);
+				public List<Feedback> saveFeedback(Feedback Feedback);
+				public List<Feedback> updateFeedback(Feedback feedback);
+
+	}
+
+
+
+

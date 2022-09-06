@@ -1,0 +1,29 @@
+package com.example.demo.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.Model.Order;
+import com.example.demo.dao.OrderRepository;
+@Service
+	public class CartServiceImpl implements CartService{
+
+		// connecting the service implementation with the Order repository
+
+		@Autowired
+		private OrderRepository orderRepo;
+
+		@Override
+		public Order makeOrder(Order order) {
+			// TODO Auto-generated method stub
+			Order makeorder = orderRepo.saveAndFlush(order);
+			return order;
+		}
+
+		/*
+		 * @Autowired public Order makeOrder(Order order) {
+		 *
+		 * Order makeorder = orderRepo.saveAndFlush(order); return order; }
+		 */
+
+	}

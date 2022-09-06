@@ -1,0 +1,16 @@
+package com.example.demo.service;
+
+import org.springframework.stereotype.Service;
+
+import com.royalcrust.Model.Order;
+
+@Service
+public interface CartService {
+
+	Order makeOrder(Order order);
+
+
+
+
+
+}

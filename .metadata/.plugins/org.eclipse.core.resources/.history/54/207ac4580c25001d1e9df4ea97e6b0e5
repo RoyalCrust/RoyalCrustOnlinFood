@@ -1,0 +1,39 @@
+package com.example.demo.service;
+
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.example.demo.Model.Feedback;
+import com.example.demo.Model.Food;
+import com.example.demo.Model.Order;
+import com.example.demo.Model.RaiseComplaint;
+
+
+
+@Service
+public interface AdminService {
+
+	/*
+	 * methods for managing the Admin
+	 */
+
+//	public List<User> getAllUsers();
+//	public List<User> getAllOrders();
+	public List<Food> getAllFood();
+	public Food addFood(Food food);
+	public Food updatFood(Food Food);
+	public Food deleteFood(int id);
+	public List<RaiseComplaint> viewComplaints();
+	public List<Feedback> viewFeedbacks();
+	public List<Order> viewOrders();
+	public Food updateFood(Food food);
+
+
+
+
+}
+
+
+
